@@ -4,4 +4,5 @@
     <dimen name="default_space_16">16dp</dimen>
     <dimen name="default_space_8">8dp</dimen>
     <dimen name="default_space_4">4dp</dimen>
+    <dimen name="default_space_2">2dp</dimen>
 </resources>
