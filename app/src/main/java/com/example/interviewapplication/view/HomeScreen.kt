@@ -45,6 +45,7 @@ fun HomeScreen(mainViewModel: MainViewModel, onAction: (MainAction) -> Unit) {
             val data = listResponse.get(it)
             Column(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(RoundedCornerShape(dimensionResource(R.dimen.default_space_16)))
                     .clickable(onClick = {
                         mainViewModel.selectedUserItem = data
