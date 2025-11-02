@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getUserList()
         enableEdgeToEdge(
             SystemBarStyle.light(
                 scrim = Color.Black.hashCode(),
@@ -63,7 +62,7 @@ class MainActivity : ComponentActivity() {
             }
 
             is MainAction.OpenDetails -> {
-                navHostController.navigate(route = "${Screens.DETAILS.name}/${action.userItem.id}")
+                navHostController.navigate(route = Screens.DETAILS.name)
             }
         }
     }

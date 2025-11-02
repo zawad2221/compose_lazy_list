@@ -48,7 +48,8 @@ fun MainNavHost(
         navHostController.addOnDestinationChangedListener { controller, destination, arguments ->
             currentScreen = Screens.entries.toMutableList()
                 .firstOrNull {
-                    it.name.hashCode() == navHostController.currentDestination?.route?.getScreenNameFromRoute().hashCode()
+                    it.name.hashCode() == navHostController.currentDestination?.route?.getScreenNameFromRoute()
+                        .hashCode()
                 }
                 ?: Screens.HOME
         }
@@ -84,12 +85,9 @@ fun MainNavHost(
                     HomeScreen(mainViewModel, onAction)
                 }
                 composable(
-                    route = "${Screens.DETAILS.name}/{id}",
-                    arguments = listOf(navArgument("id") { type = NavType.IntType })
+                    route = Screens.DETAILS.name
                 ) {
-                    val id = it.arguments?.getInt("id")
-
-                    mainViewModel.userListToShow.value.firstOrNull { it.id == id }
+                    mainViewModel.selectedUserItem
                         ?.let { userItem -> DetailsScreen(userItem) }
                 }
             }

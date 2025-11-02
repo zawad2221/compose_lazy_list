@@ -1,31 +1,34 @@
 package com.example.interviewapplication.view
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.interviewapplication.data.model.UserList
-import com.example.interviewapplication.data.network.Resource
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import com.example.interviewapplication.data.model.UserItem
+import com.example.interviewapplication.data.network.ErrorType
+import com.example.interviewapplication.data.remote.UserPagingSource
 import com.example.interviewapplication.data.repo.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import androidx.lifecycle.viewModelScope
-import com.example.interviewapplication.data.model.UserItem
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
 ) : ViewModel() {
-    private val _userListResponse = MutableStateFlow<Resource<UserList>>(Resource.Loading())
-    val userListResponse = _userListResponse.asStateFlow()
 
-    var userListToShow = mutableStateOf<List<UserItem>>(listOf())
-
-    fun getUserList() {
-        repository.getList().onEach { response ->
-            _userListResponse.emit(response)
-        }.launchIn(scope = viewModelScope)
-    }
+    var selectedUserItem: UserItem? = null
+    val loadUserData = Pager(
+        config = PagingConfig(
+            pageSize = 10,
+            prefetchDistance = 3,
+            initialLoadSize = 20
+        ),
+        pagingSourceFactory = { UserPagingSource(repository) }
+    ).flow.flowOn(Dispatchers.IO).catch {
+        ErrorType.UNKNOWN
+    }.cachedIn(viewModelScope)
 }

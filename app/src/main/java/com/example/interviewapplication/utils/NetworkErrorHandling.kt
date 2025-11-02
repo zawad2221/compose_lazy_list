@@ -22,6 +22,15 @@ class NetworkErrorHandling @Inject constructor(
                 )
             }
 
+            is Throwable -> {
+                Resource.Error(
+                    uiComponent = UiComponent.Toast(
+                        message = context.getString(R.string.something_went_wrong)
+                    ),
+                    type = ErrorType.UNKNOWN
+                )
+            }
+
             is Int -> {
                 when (error) {
                     401 -> {
