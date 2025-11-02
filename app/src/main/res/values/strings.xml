@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Interview Application</string>
+    <string name="app_name">LazyList</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="login_again">Login again</string>
     <string name="home">Home</string>
