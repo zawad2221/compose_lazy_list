@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.Packaging
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -10,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.interviewapplication"
+    namespace = "com.example.composelazylist"
     compileSdk {
         version = release(36)
     }
@@ -18,7 +16,7 @@ android {
     buildFeatures.buildConfig = true
 
     defaultConfig {
-        applicationId = "com.example.interviewapplication"
+        applicationId = "com.example.composelazylist"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
